@@ -1,71 +1,1071 @@
 <!doctype html>
-<html lang="el"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Πελατολόγιο</title><meta name="theme-color" content="#0b5fff"><script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<html lang="el">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Πελατολόγιο</title>
+<meta name="theme-color" content="#0b5fff">
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <link rel="manifest" href="manifest.json">
-<style>:root{--blue:#0b5fff;--bg:#f4f6fb;--card:#fff;--line:#e3e8f2;--text:#16213a;--muted:#667085;--green:#12855b;--red:#c62828}*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--text)}header{position:sticky;top:0;background:var(--blue);color:#fff;padding:14px 16px;font-weight:700;font-size:20px;z-index:10}main{padding:14px;max-width:820px;margin:0 auto;padding-bottom:150px}.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px}h2{margin:0 0 10px;font-size:18px}input,select,textarea,button{font:inherit;width:100%;padding:11px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--text)}textarea{min-height:80px;resize:vertical}button{cursor:pointer;border:none;font-weight:600}.btn{background:var(--blue);color:#fff}.btn.secondary{background:#eef2ff;color:var(--blue)}.btn.green{background:var(--green);color:#fff}.btn.red{background:#fdecec;color:var(--red)}.btn.small{padding:8px 10px;font-size:14px;width:auto}.row{display:flex;gap:8px;flex-wrap:wrap}.row>*{flex:1;min-width:130px}label{display:block;font-size:13px;color:var(--muted);margin:8px 0 4px;font-weight:600}.list-item{padding:12px;border-bottom:1px solid var(--line);cursor:pointer}.list-item:last-child{border-bottom:none}.name{font-weight:700}.sub{color:var(--muted);font-size:13px;margin-top:2px}.badge{display:inline-block;background:#eef2ff;color:var(--blue);border-radius:999px;padding:3px 9px;font-size:12px;font-weight:700;margin-right:5px}.badge.gray{background:#f1f3f7;color:#475467}.badge.green{background:#e7f6ef;color:var(--green)}.hidden{display:none!important}.fab{position:fixed;right:16px;bottom:18px;display:flex;flex-direction:column;gap:8px;z-index:20}.fab button{width:auto;padding:11px 15px;border-radius:999px;box-shadow:0 4px 14px rgba(0,0,0,.18);font-size:14px}.empty{text-align:center;color:var(--muted);padding:25px 10px}.activity{border-left:4px solid var(--blue);padding:10px 12px;background:#fafbff;border-radius:8px;margin-bottom:8px}.activity.call{border-color:#7a5af8}.activity.visit{border-color:var(--green)}.topbar{display:flex;gap:8px;align-items:center;margin-bottom:10px}.back{background:#fff;border:1px solid var(--line);color:var(--text);width:auto;padding:9px 12px}.count{color:var(--muted);font-size:13px;margin:6px 2px 10px}#modal{position:fixed;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;z-index:60;padding:16px}#modal .box{background:#fff;border-radius:14px;padding:16px;max-width:420px;width:100%}</style></head><body>
+<style>
+:root{--blue:#0b5fff;--bg:#f4f6fb;--card:#fff;--line:#e3e8f2;--text:#16213a;--muted:#667085;--green:#12855b;--red:#c62828}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--text)}
+header{position:sticky;top:0;background:var(--blue);color:#fff;padding:14px 16px;font-weight:700;font-size:20px;z-index:10}
+main{padding:14px;max-width:820px;margin:0 auto;padding-bottom:170px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px}
+h2{margin:0 0 10px;font-size:18px}
+input,select,textarea,button{font:inherit;width:100%;padding:11px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--text)}
+textarea{min-height:80px;resize:vertical}
+button{cursor:pointer;border:none;font-weight:600}
+.btn{background:var(--blue);color:#fff}
+.btn.secondary{background:#eef2ff;color:var(--blue)}
+.btn.green{background:var(--green);color:#fff}
+.btn.red{background:#fdecec;color:var(--red)}
+.btn.small{padding:8px 10px;font-size:14px;width:auto}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+.row>*{flex:1;min-width:130px}
+label{display:block;font-size:13px;color:var(--muted);margin:8px 0 4px;font-weight:600}
+.list-item{padding:12px;border-bottom:1px solid var(--line);cursor:pointer}
+.list-item:last-child{border-bottom:none}
+.name{font-weight:700}
+.sub{color:var(--muted);font-size:13px;margin-top:2px}
+.badge{display:inline-block;background:#eef2ff;color:var(--blue);border-radius:999px;padding:3px 9px;font-size:12px;font-weight:700;margin-right:5px}
+.badge.gray{background:#f1f3f7;color:#475467}
+.badge.green{background:#e7f6ef;color:var(--green)}
+.badge.purple{background:#f3e8ff;color:#5f27cd}
+.hidden{display:none!important}
+.fab{position:fixed;right:16px;bottom:18px;display:flex;flex-direction:column;gap:8px;z-index:20}
+.fab button{width:auto;padding:11px 15px;border-radius:999px;box-shadow:0 4px 14px rgba(0,0,0,.18);font-size:14px}
+.empty{text-align:center;color:var(--muted);padding:25px 10px}
+.activity{border-left:4px solid var(--blue);padding:10px 12px;background:#fafbff;border-radius:8px;margin-bottom:8px}
+.activity.call{border-color:#7a5af8}
+.activity.visit{border-color:var(--green)}
+.activity.repair{border-color:#e67e22}
+.topbar{display:flex;gap:8px;align-items:center;margin-bottom:10px}
+.back{background:#fff;border:1px solid var(--line);color:var(--text);width:auto;padding:9px 12px}
+.count{color:var(--muted);font-size:13px;margin:6px 2px 10px}
+#modal,#repairModal{position:fixed;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;z-index:60;padding:16px}
+#modal .box,#repairModal .box{background:#fff;border-radius:14px;padding:16px;max-width:420px;width:100%}
+</style>
+</head>
+<body>
+
 <header id="appTitle">Πελατολόγιο</header>
+
 <main>
-<section id="homeView"><div class="card"><h2>Αναζήτηση πελατών</h2><input id="search" placeholder="Αναζήτηση..."><div class="row" style="margin-top:8px"><select id="nomosFilter"><option value="">Όλοι οι νομοί</option></select><select id="dateFilter"><option value="">Χωρίς φίλτρο ημερομηνίας</option><option value="today">Σήμερα</option><option value="week">Τελευταίες 7 ημέρες</option><option value="month">Τρέχων μήνας</option><option value="custom">Προσαρμοσμένο</option></select></div><div id="customDates" class="row hidden" style="margin-top:8px"><div><label>Από</label><input type="date" id="dateFrom"></div><div><label>Έως</label><input type="date" id="dateTo"></div></div><div class="count" id="resultCount"></div></div><div class="card"><div id="customerList"></div></div><div class="card"><h2>Συντήρηση δεδομένων</h2><div class="row"><button class="btn secondary" onclick="dedupeCustomers()">🧹 Καθαρισμός διπλότυπων</button><button class="btn red" onclick="deleteAllCustomers()">🗑️ Διαγραφή όλων των πελατών</button></div><div class="sub" style="margin-top:8px">Ο καθαρισμός κρατά μία εγγραφή από κάθε ακριβώς ίδια γραμμή. Δεν αγγίζει πελάτες με διαφορετικό κατάστημα, διεύθυνση, τηλέφωνο ή serial.</div></div><div class="fab"><button class="btn secondary" onclick="document.getElementById('fileInput').click()">📥 Εισαγωγή Excel</button><button class="btn green" onclick="exportExcel()">📤 Εξαγωγή Excel</button><button class="btn" onclick="quickCall()">📞 Νέο τηλεφώνημα</button><button class="btn" style="background:#5f27cd" onclick="showNearby()">📍 Πελάτες κοντά μου</button><button class="btn" onclick="showCustomerForm()">＋ Νέος πελάτης</button></div><input type="file" id="fileInput" accept=".xlsx,.xls,.csv" class="hidden"></section>
-<section id="customerView" class="hidden"><div class="topbar"><button class="back" onclick="showHome()">← Πίσω</button></div><div class="card" id="customerCard"></div><div class="card"><h2>Νέα δραστηριότητα</h2><div class="row"><div><label>Τύπος</label><select id="actType"><option value="visit">Επίσκεψη</option><option value="call">Τηλεφώνημα</option></select></div><div><label>Ημερομηνία</label><input type="date" id="actDate"></div><div><label>Ώρα</label><input type="time" id="actTime"></div></div><div id="visitFields"><label>Τοποθεσία</label><input id="visitPlace"></div><div id="callFields" class="hidden"><label>Τύπος κλήσης</label><select id="callDirection"><option value="Εξερχόμενη">Εξερχόμενη</option><option value="Εισερχόμενη">Εισερχόμενη</option></select></div><label>Θέμα</label><input id="actSubject"><label>Τι έγινε / αποτέλεσμα</label><textarea id="actResult"></textarea><label>Επόμενη ενέργεια</label><input id="actNext"><label>Υπενθύμιση</label><input type="datetime-local" id="actReminder"><button class="btn" style="margin-top:10px" onclick="addActivity()">Αποθήκευση δραστηριότητας</button></div><div class="card"><h2>Ιστορικό</h2><div id="activityList"></div></div></section>
-<section id="customerFormView" class="hidden"><div class="topbar"><button class="back" onclick="showHome()">← Πίσω</button></div><div class="card"><h2 id="customerFormTitle">Νέος πελάτης</h2><label>ΚΩΔ.</label><input id="fkod"><label>ΕΠΩΝΥΜΙΑ *</label><input id="fname"><label>ΚΑΤΑΣΤΗΜΑ / ΥΠΟΚΑΤΑΣΤΗΜΑ</label><input id="fbranch"><label>ΠΕΡΙΟΧΗ-ΠΟΛΗ</label><input id="fcity"><label>ΝΟΜΟΣ</label><input id="fnomos" list="nomosList"><datalist id="nomosList"></datalist><label>ΔΙΕΥΘΥΝΣΗ</label><input id="faddress"><label>ΤΥΠΟΣ ΜΗΧΑΝΗΣ</label><input id="fmachine"><label>ΤΥΠΟΣ ΑΝΑΔΕΥΤΗΡΑ</label><input id="fmixer"><label>ΠΩΛ.</label><input id="fsales"><label>ΤΗΛΕΦΩΝΟ</label><input id="fphone"><label>ΚΙΝΗΤΟ</label><input id="fmobile"><label>SERIAL TINTING</label><input id="ftinting"><label>S/N ΑΝΑΔ.</label><input id="fsn"><button class="btn" style="margin-top:12px" onclick="saveCustomerForm()">Αποθήκευση</button></div></section>
-<section id="nearbyView" class="hidden"><div class="topbar"><button class="back" onclick="showHome()">← Πίσω</button></div><div class="card"><h2>Πελάτες κοντά μου</h2><div class="sub" id="nearbyInfo"></div><div id="nearbyList" style="margin-top:10px"></div></div></section>
-</main><div id="toast" class="hidden" style="position:fixed;left:50%;transform:translateX(-50%);bottom:150px;background:#16213a;color:#fff;padding:11px 16px;border-radius:10px;z-index:50;max-width:90%"></div>
-<div id="modal" class="hidden"><div class="box"><h2>Νέο τηλεφώνημα</h2><label>Τηλέφωνο πελάτη</label><input id="quickPhone" inputmode="tel"><div id="quickMatch" class="sub" style="margin:8px 0"></div><div class="row"><button class="btn secondary" onclick="closeModal()">Άκυρο</button><button class="btn" onclick="quickCallSave()">Άνοιγμα & καταχώρηση</button></div></div></div>
+
+<section id="homeView">
+  <div class="card">
+    <h2>Αναζήτηση πελατών</h2>
+    <input id="search" placeholder="Αναζήτηση...">
+    <div class="row" style="margin-top:8px">
+      <select id="nomosFilter"><option value="">Όλοι οι νομοί</option></select>
+      <select id="dateFilter">
+        <option value="">Χωρίς φίλτρο ημερομηνίας</option>
+        <option value="today">Σήμερα</option>
+        <option value="week">Τελευταίες 7 ημέρες</option>
+        <option value="month">Τρέχων μήνας</option>
+        <option value="custom">Προσαρμοσμένο</option>
+      </select>
+    </div>
+    <div id="customDates" class="row hidden" style="margin-top:8px">
+      <div><label>Από</label><input type="date" id="dateFrom"></div>
+      <div><label>Έως</label><input type="date" id="dateTo"></div>
+    </div>
+    <div class="count" id="resultCount"></div>
+  </div>
+
+  <div class="card">
+    <div id="customerList"></div>
+  </div>
+
+  <div class="card">
+    <h2>Συντήρηση δεδομένων</h2>
+    <div class="row">
+      <button class="btn secondary" onclick="dedupeCustomers()">🧹 Καθαρισμός διπλότυπων</button>
+      <button class="btn red" onclick="deleteAllCustomers()">🗑️ Διαγραφή όλων των πελατών</button>
+    </div>
+    <div class="sub" style="margin-top:8px">
+      Ο καθαρισμός κρατά μία εγγραφή από κάθε ακριβώς ίδια γραμμή. Δεν αγγίζει πελάτες με διαφορετικό κατάστημα, διεύθυνση, τηλέφωνο ή serial.
+    </div>
+  </div>
+
+  <div class="fab">
+    <button class="btn secondary" onclick="document.getElementById('fileInput').click()">📥 Εισαγωγή Excel</button>
+    <button class="btn green" onclick="exportExcel()">📤 Εξαγωγή Excel</button>
+    <button class="btn" onclick="quickCall()">📞 Νέο τηλεφώνημα</button>
+    <button class="btn" style="background:#e67e22" onclick="quickRepair()">🔧 Νέα επισκευή</button>
+    <button class="btn" style="background:#5f27cd" onclick="showNearby()">📍 Πελάτες κοντά μου</button>
+    <button class="btn" onclick="showCustomerForm()">＋ Νέος πελάτης</button>
+  </div>
+
+  <input type="file" id="fileInput" accept=".xlsx,.xls,.csv" class="hidden">
+</section>
+
+<section id="customerView" class="hidden">
+  <div class="topbar">
+    <button class="back" onclick="showHome()">← Πίσω</button>
+  </div>
+
+  <div class="card" id="customerCard"></div>
+
+  <div class="card">
+    <h2>Νέα δραστηριότητα</h2>
+    <div class="row">
+      <div>
+        <label>Τύπος</label>
+        <select id="actType">
+          <option value="visit">Επίσκεψη</option>
+          <option value="call">Τηλεφώνημα</option>
+          <option value="repair">Επισκευή</option>
+        </select>
+      </div>
+      <div><label>Ημερομηνία</label><input type="date" id="actDate"></div>
+      <div><label>Ώρα</label><input type="time" id="actTime"></div>
+    </div>
+
+    <div id="visitFields">
+      <label>Τοποθεσία</label>
+      <input id="visitPlace">
+    </div>
+
+    <div id="callFields" class="hidden">
+      <label>Τύπος κλήσης</label>
+      <select id="callDirection">
+        <option value="Εξερχόμενη">Εξερχόμενη</option>
+        <option value="Εισερχόμενη">Εισερχόμενη</option>
+      </select>
+    </div>
+
+    <div id="repairFields" class="hidden">
+      <label>Συσκευή / μηχάνημα</label>
+      <input id="repairMachine">
+      <label>Περιγραφή βλάβης</label>
+      <textarea id="repairProblem"></textarea>
+      <label>Εργασίες / ανταλλακτικά</label>
+      <input id="repairWork">
+      <label>Κόστος</label>
+      <input id="repairCost" inputmode="decimal">
+      <label>Κατάσταση</label>
+      <select id="repairStatus">
+        <option value="Σε αναμονή">Σε αναμονή</option>
+        <option value="Σε εξέλιξη">Σε εξέλιξη</option>
+        <option value="Ολοκληρώθηκε">Ολοκληρώθηκε</option>
+        <option value="Παραδόθηκε">Παραδόθηκε</option>
+      </select>
+    </div>
+
+    <label>Θέμα</label>
+    <input id="actSubject">
+
+    <label>Τι έγινε / αποτέλεσμα</label>
+    <textarea id="actResult"></textarea>
+
+    <label>Επόμενη ενέργεια</label>
+    <input id="actNext">
+
+    <label>Υπενθύμιση</label>
+    <input type="datetime-local" id="actReminder">
+
+    <button class="btn" style="margin-top:10px" onclick="addActivity()">Αποθήκευση δραστηριότητας</button>
+  </div>
+
+  <div class="card">
+    <h2>Ιστορικό</h2>
+    <div id="activityList"></div>
+  </div>
+</section>
+
+<section id="customerFormView" class="hidden">
+  <div class="topbar">
+    <button class="back" onclick="showHome()">← Πίσω</button>
+  </div>
+
+  <div class="card">
+    <h2 id="customerFormTitle">Νέος πελάτης</h2>
+
+    <label>ΚΩΔ.</label><input id="fkod">
+    <label>ΕΠΩΝΥΜΙΑ *</label><input id="fname">
+    <label>ΚΑΤΑΣΤΗΜΑ / ΥΠΟΚΑΤΑΣΤΗΜΑ</label><input id="fbranch">
+    <label>ΠΕΡΙΟΧΗ-ΠΟΛΗ</label><input id="fcity">
+    <label>ΝΟΜΟΣ</label><input id="fnomos" list="nomosList">
+    <datalist id="nomosList"></datalist>
+    <label>ΔΙΕΥΘΥΝΣΗ</label><input id="faddress">
+    <label>ΤΥΠΟΣ ΜΗΧΑΝΗΣ</label><input id="fmachine">
+    <label>ΤΥΠΟΣ ΑΝΑΔΕΥΤΗΡΑ</label><input id="fmixer">
+    <label>ΠΩΛ.</label><input id="fsales">
+    <label>ΤΗΛΕΦΩΝΟ</label><input id="fphone">
+    <label>ΚΙΝΗΤΟ</label><input id="fmobile">
+    <label>SERIAL TINTING</label><input id="ftinting">
+    <label>S/N ΑΝΑΔ.</label><input id="fsn">
+
+    <button class="btn" style="margin-top:12px" onclick="saveCustomerForm()">Αποθήκευση</button>
+  </div>
+</section>
+
+<section id="nearbyView" class="hidden">
+  <div class="topbar">
+    <button class="back" onclick="showHome()">← Πίσω</button>
+  </div>
+
+  <div class="card">
+    <h2>Πελάτες κοντά μου</h2>
+    <div class="sub" id="nearbyInfo"></div>
+    <div id="nearbyList" style="margin-top:10px"></div>
+  </div>
+</section>
+
+</main>
+
+<div id="toast" class="hidden" style="position:fixed;left:50%;transform:translateX(-50%);bottom:170px;background:#16213a;color:#fff;padding:11px 16px;border-radius:10px;z-index:50;max-width:90%"></div>
+
+<div id="modal" class="hidden">
+  <div class="box">
+    <h2>Νέο τηλεφώνημα</h2>
+    <label>Τηλέφωνο πελάτη</label>
+    <input id="quickPhone" inputmode="tel">
+    <div id="quickMatch" class="sub" style="margin:8px 0"></div>
+    <div class="row">
+      <button class="btn secondary" onclick="closeModal()">Άκυρο</button>
+      <button class="btn" onclick="quickCallSave()">Άνοιγμα & καταχώρηση</button>
+    </div>
+  </div>
+</div>
+
+<div id="repairModal" class="hidden">
+  <div class="box">
+    <h2>Νέα επισκευή</h2>
+    <label>Τηλέφωνο πελάτη</label>
+    <input id="repairPhone" inputmode="tel">
+    <div id="repairMatch" class="sub" style="margin:8px 0"></div>
+    <div class="row">
+      <button class="btn secondary" onclick="closeRepairModal()">Άκυρο</button>
+      <button class="btn" style="background:#e67e22" onclick="quickRepairSave()">Άνοιγμα & καταχώρηση</button>
+    </div>
+  </div>
+</div>
+
 <script>
-window.addEventListener('error',e=>{try{toast('Σφάλμα: '+e.message)}catch(_){alert('Σφάλμα: '+e.message)}});
-const REQUIRED=['appTitle','homeView','customerView','customerFormView','nearbyView','search','nomosFilter','dateFilter','customDates','dateFrom','dateTo','resultCount','customerList','fileInput','customerCard','actType','actDate','actTime','visitFields','callFields','callDirection','actSubject','actResult','actNext','actReminder','activityList','fkod','fname','fbranch','fcity','fnomos','nomosList','faddress','fmachine','fmixer','fsales','fphone','fmobile','ftinting','fsn','nearbyInfo','nearbyList','toast','modal','quickPhone','quickMatch'];
+window.addEventListener('error',e=>{
+  try{toast('Σφάλμα: '+e.message)}
+  catch(_){alert('Σφάλμα: '+e.message)}
+});
+
+const REQUIRED=['appTitle','homeView','customerView','customerFormView','nearbyView','search','nomosFilter','dateFilter','customDates','dateFrom','dateTo','resultCount','customerList','fileInput','customerCard','actType','actDate','actTime','visitFields','callFields','repairFields','callDirection','repairMachine','repairProblem','repairWork','repairCost','repairStatus','actSubject','actResult','actNext','actReminder','activityList','fkod','fname','fbranch','fcity','fnomos','nomosList','faddress','fmachine','fmixer','fsales','fphone','fmobile','ftinting','fsn','nearbyInfo','nearbyList','toast','modal','repairModal','quickPhone','quickMatch','repairPhone','repairMatch'];
+
 const FIELDS=['kod','name','branch','city','nomos','address','machine','mixer','sales','phone','mobile','tinting','sn'];
-const LABELS={kod:'ΚΩΔ.',name:'ΕΠΩΝΥΜΙΑ',branch:'ΚΑΤΑΣΤΗΜΑ/ΥΠΟΚΑΤΑΣΤΗΜΑ',city:'ΠΕΡΙΟΧΗ-ΠΟΛΗ',nomos:'ΝΟΜΟΣ',address:'ΔΙΕΥΘΥΝΣΗ',machine:'ΤΥΠΟΣ ΜΗΧΑΝΗΣ',mixer:'ΤΥΠΟΣ ΑΝΑΔΕΥΤΗΡΑ',sales:'ΠΩΛ.',phone:'ΤΗΛΕΦΩΝΟ',mobile:'ΚΙΝΗΤΟ',tinting:'SERIAL TINTING',sn:'S/N ΑΝΑΔ.'};
-const SYNONYMS={kod:['κωδ','κωδικο','κωδικοσ','code'],name:['επωνυμια','ονομα','επιχειρηση','name'],branch:['καταστημα','υποκαταστημα','μαγαζι','shop','branch'],city:['περιοχη','πολη','city'],nomos:['νομοσ','νομος','prefecture'],address:['διευθυνση','οδος','address'],machine:['τυποσ μηχανησ','μηχανη','machine'],mixer:['τυποσ αναδευτηρα','αναδευτηρασ','mixer'],sales:['πωλ','πωλητησ','sales'],phone:['τηλεφων','τηλ','τηλεφωνο','phone'],mobile:['κινητο','κινη','mobile'],tinting:['serial tinting','tinting serial'],sn:['s/n αναδ','sn','serial number']};
-let customers=JSON.parse(localStorage.getItem('customers')||'[]');let activities=JSON.parse(localStorage.getItem('activities')||'[]');let currentCustomerId=null,editingCustomerId=null,quickCustomerId=null;const $=id=>document.getElementById(id);
-function save(){localStorage.setItem('customers',JSON.stringify(customers));localStorage.setItem('activities',JSON.stringify(activities));}
-function toast(m){const t=$('toast');if(!t){alert(m);return;}t.textContent=m;t.classList.remove('hidden');setTimeout(()=>t.classList.add('hidden'),4000);}
-function norm(s){if(s==null)return'';s=String(s).trim().toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/ς/g,'σ');const map={'α':'a','β':'v','γ':'g','δ':'d','ε':'e','ζ':'z','η':'i','θ':'th','ι':'i','κ':'k','λ':'l','μ':'m','ν':'n','ξ':'x','ο':'o','π':'p','ρ':'r','σ':'s','τ':'t','υ':'y','φ':'f','χ':'ch','ψ':'ps','ω':'o'};return s.split('').map(c=>map[c]||c).join('').replace(/s+/g,' ');}
-function digits(s){return String(s||'').replace(/D/g,'')}
-function rowKey(rec){return FIELDS.map(f=>norm(rec[f])).join('|')}
-function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
-function fmtDate(d){return d?new Date(d).toLocaleDateString('el-GR'):''}function fmtDT(d){return d?new Date(d).toLocaleString('el-GR',{dateStyle:'short',timeStyle:'short'}):''}
-function matchesDate(a){const f=$('dateFilter').value;if(!f)return true;const d=a.date?new Date(a.date):null;if(!d)return false;const now=new Date();now.setHours(0,0,0,0);if(f==='today')return d.toDateString()===new Date().toDateString();if(f==='week'){const w=new Date(now);w.setDate(now.getDate()-6);return d>=w&&d<=new Date();}if(f==='month')return d.getMonth()===new Date().getMonth()&&d.getFullYear()===new Date().getFullYear();if(f==='custom'){const from=$('dateFrom').value?new Date($('dateFrom').value):null,to=$('dateTo').value?new Date($('dateTo').value):null;if(from)from.setHours(0,0,0,0);if(to)to.setHours(23,59,59,999);return(!from||d>=from)&&(!to||d<=to);}return true;}
-function customerActivities(id){return activities.filter(a=>a.customerId===id).sort((a,b)=>(b.date||'').localeCompare(a.date||''));}
-function distanceKm(a,b,c,d){const R=6371,dLat=(c-a)*Math.PI/180,dLon=(d-b)*Math.PI/180;const x=Math.sin(dLat/2)**2+Math.cos(a*Math.PI/180)*Math.cos(c*Math.PI/180)*Math.sin(dLon/2)**2;return 2*R*Math.asin(Math.sqrt(x));}
-function render(){const q=norm($('search').value),nf=norm($('nomosFilter').value);let list=customers.filter(c=>{const hay=norm(FIELDS.map(f=>c[f]).join(' ')+' '+customerActivities(c.id).map(a=>[a.type,a.subject,a.result,a.next,a.place,a.direction].join(' ')).join(' '));return(!q||hay.includes(q))&&(!nf||norm(c.nomos)===nf);});if($('dateFilter').value)list=list.filter(c=>customerActivities(c.id).some(matchesDate));list.sort((a,b)=>(a.name||'').localeCompare(b.name||'','el'));$('resultCount').textContent=list.length+' πελάτες';$('customerList').innerHTML=list.length?list.map(c=>`<div class="list-item" onclick="openCustomer('${c.id}')"><div class="name">${esc(c.name||'(χωρίς όνομα)')}</div><div class="sub">${esc([c.kod,c.branch,c.city,c.nomos].filter(Boolean).join(' • '))}</div><div class="sub">${esc([c.address,c.phone,c.mobile].filter(Boolean).join(' • '))}</div><div style="margin-top:6px"><span class="badge">${customerActivities(c.id).filter(a=>a.type==='visit').length} επισκέψεις</span><span class="badge gray">${customerActivities(c.id).filter(a=>a.type==='call').length} τηλεφωνήματα</span></div></div>`).join(''):'<div class="empty">Δεν βρέθηκαν πελάτες.</div>';const nomoi=[...new Set(customers.map(c=>c.nomos).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'el'));$('nomosFilter').innerHTML='<option value="">Όλοι οι νομοί</option>'+nomoi.map(n=>`<option ${norm(n)===nf?'selected':''}>${esc(n)}</option>`).join('');$('nomosList').innerHTML=nomoi.map(n=>`<option value="${esc(n)}">`).join('');renderReminders();}
-function showHome(){['customerView','customerFormView','nearbyView'].forEach(i=>{const e=$(i);if(e)e.classList.add('hidden')});$('homeView').classList.remove('hidden');$('appTitle').textContent='Πελατολόγιο';render();}
-function showCustomerForm(id=null){editingCustomerId=id;const c=id?customers.find(x=>x.id===id):null;$('customerFormTitle').textContent=c?'Επεξεργασία πελάτη':'Νέος πελάτης';FIELDS.forEach(f=>$('f'+f).value=c?(c[f]||''):'');['homeView','customerView','nearbyView'].forEach(i=>$(i).classList.add('hidden'));$('customerFormView').classList.remove('hidden');}
-function saveCustomerForm(){const name=$('fname').value.trim();if(!name){toast('Συμπλήρωσε Επωνυμία');return;}let c=editingCustomerId?customers.find(x=>x.id===editingCustomerId):{id:'c'+Date.now()+Math.random().toString(36).slice(2,7)};FIELDS.forEach(f=>c[f]=$('f'+f).value.trim());if(!editingCustomerId)customers.push(c);save();toast('Αποθηκεύτηκε');showHome();}
-function mapsUrl(c){const q=[c.address,c.city,c.nomos,c.name].filter(Boolean).join(', ');return 'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(q);}
-function openCustomer(id,prefillCall=false){currentCustomerId=id;const c=customers.find(x=>x.id===id);if(!c)return;$('customerCard').innerHTML=`<div style="display:flex;justify-content:space-between;gap:8px"><h2>${esc(c.name||'')}</h2><div><button class="btn secondary small" onclick="showCustomerForm('${c.id}')">Επεξεργασία</button> <button class="btn red small" onclick="deleteCustomer('${c.id}')">Διαγραφή</button></div></div><div>${c.kod?`<span class="badge">ΚΩΔ. ${esc(c.kod)}</span>`:''}${c.branch?`<span class="badge gray">${esc(c.branch)}</span>`:''}${c.nomos?`<span class="badge gray">${esc(c.nomos)}</span>`:''}${c.city?`<span class="badge gray">${esc(c.city)}</span>`:''}</div><div style="margin-top:10px;font-size:14px;line-height:1.7">${[['ΚΑΤΑΣΤΗΜΑ/ΥΠΟΚΑΤΑΣΤΗΜΑ',c.branch],['ΔΙΕΥΘΥΝΣΗ',c.address],['ΤΥΠΟΣ ΜΗΧΑΝΗΣ',c.machine],['ΤΥΠΟΣ ΑΝΑΔΕΥΤΗΡΑ',c.mixer],['ΠΩΛ.',c.sales],['ΤΗΛΕΦΩΝΟ',c.phone],['ΚΙΝΗΤΟ',c.mobile],['SERIAL TINTING',c.tinting],['S/N ΑΝΑΔ.',c.sn]].filter(x=>x[1]).map(x=>`<div><b>${x[0]}:</b> ${esc(x[1])}</div>`).join('')}</div><div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">${c.phone?`<a href="tel:${esc(c.phone)}"><button class="btn secondary small">📞 ${esc(c.phone)}</button></a>`:''}${c.mobile?`<a href="tel:${esc(c.mobile)}"><button class="btn secondary small">📱 ${esc(c.mobile)}</button></a>`:''}<a href="${mapsUrl(c)}" target="_blank"><button class="btn secondary small">🗺️ Google Maps</button></a><button class="btn secondary small" onclick="saveLocation('${c.id}')">📍 Αποθήκευση τοποθεσίας</button></div>`;$('actDate').value=new Date().toISOString().slice(0,10);$('actTime').value=new Date().toTimeString().slice(0,5);if(prefillCall){$('actType').value='call';$('callFields').classList.remove('hidden');$('visitFields').classList.add('hidden');$('callDirection').value='Εισερχόμενη';}else{$('actType').value='visit';$('visitFields').classList.remove('hidden');$('callFields').classList.add('hidden');}renderActivities();['homeView','customerFormView','nearbyView'].forEach(i=>$(i).classList.add('hidden'));$('customerView').classList.remove('hidden');$('appTitle').textContent=c.name||'Πελάτης';}
-function deleteCustomer(id){if(!confirm('Να διαγραφεί ο πελάτης και όλο το ιστορικό του;'))return;customers=customers.filter(c=>c.id!==id);activities=activities.filter(a=>a.customerId!==id);save();showHome();}
-function dedupeCustomers(){if(!confirm('Να αφαιρεθούν οι ακριβώς ίδιες διπλές εγγραφές; Θα κρατηθεί μία από κάθε ομάδα.'))return;const seen=new Set();const keep=[];let removed=0;customers.forEach(c=>{const k=rowKey(c);if(seen.has(k)){removed++;const aid=activities.filter(a=>a.customerId===c.id).map(a=>a.id);activities=activities.filter(a=>!aid.includes(a.id));}else{seen.add(k);keep.push(c);}});customers=keep;save();showHome();toast('Αφαιρέθηκαν '+removed+' διπλότυπες εγγραφές.');}
-function deleteAllCustomers(){if(!confirm('ΠΡΟΣΟΧΗ: Θα διαγραφούν ΟΛΟΙ οι πελάτες και όλες οι δραστηριότητες. Συνέχεια;'))return;if(!confirm('Είσαι βέβαιος; Η διαγραφή είναι οριστική. Πρότεινεται πρώτα Εξαγωγή Excel.'))return;customers=[];activities=[];save();showHome();toast('Διαγράφηκαν όλα τα δεδομένα.');}
-function addActivity(){if(!currentCustomerId)return;const type=$('actType').value;const a={id:'a'+Date.now()+Math.random().toString(36).slice(2,6),customerId:currentCustomerId,type,date:$('actDate').value,time:$('actTime').value,subject:$('actSubject').value.trim(),result:$('actResult').value.trim(),next:$('actNext').value.trim(),reminder:$('actReminder').value,place:type==='visit'?$('visitPlace').value.trim():'',direction:type==='call'?$('callDirection').value:''};if(!a.date){toast('Συμπλήρωσε ημερομηνία');return;}activities.push(a);save();$('actSubject').value='';$('actResult').value='';$('actNext').value='';$('actReminder').value='';$('visitPlace').value='';toast('Η δραστηριότητα αποθηκεύτηκε');renderActivities();if('Notification' in window&&Notification.permission==='default')Notification.requestPermission();}
-$('actType').addEventListener('change',()=>{const v=$('actType').value;$('visitFields').classList.toggle('hidden',v!=='visit');$('callFields').classList.toggle('hidden',v!=='call');});
-function renderActivities(){const acts=customerActivities(currentCustomerId);$('activityList').innerHTML=acts.length?acts.map(a=>`<div class="activity ${a.type}"><div><span class="badge ${a.type==='visit'?'green':''}">${a.type==='visit'?'ΕΠΙΣΚΕΨΗ':'ΤΗΛΕΦΩΝΗΜΑ'}</span>${a.direction?`<span class="badge gray">${esc(a.direction)}</span>`:''}<b>${fmtDate(a.date)}${a.time?' '+esc(a.time):''}</b></div><div style="margin-top:4px">${a.subject?`<b>${esc(a.subject)}</b><br>`:''}${a.place?`📍 ${esc(a.place)}<br>`:''}${a.result?esc(a.result).replace(/
-/g,'<br>'):''}</div>${a.next?`<div style="margin-top:5px"><b>Επόμενη:</b> ${esc(a.next)}</div>`:''}${a.reminder?`<div class="sub">⏰ Υπενθύμιση: ${fmtDT(a.reminder)}</div>`:''}<button class="btn red small" style="margin-top:8px" onclick="deleteActivity('${a.id}')">Διαγραφή</button></div>`).join(''):'<div class="empty">Δεν υπάρχουν καταχωρήσεις ακόμη.</div>';}
-function deleteActivity(id){if(!confirm('Να διαγραφεί η δραστηριότητα;'))return;activities=activities.filter(a=>a.id!==id);save();renderActivities();}
-function renderReminders(){const now=Date.now();const rem=activities.filter(a=>a.reminder&&new Date(a.reminder).getTime()>=now-86400000).sort((a,b)=>a.reminder.localeCompare(b.reminder));const rl=$('reminderList');if(!rl)return;rl.innerHTML=rem.length?rem.map(a=>{const c=customers.find(x=>x.id===a.customerId)||{};return `<div class="activity ${a.type}"><b>${fmtDT(a.reminder)}</b><div>${esc(c.name||'')}</div><div class="sub">${a.type==='visit'?'Επίσκεψη':'Τηλεφώνημα'} • ${esc(a.subject||a.next||'')}</div><button class="btn secondary small" onclick="openCustomer('${a.customerId}')">Άνοιγμα πελάτη</button></div>`}).join(''):'<div class="empty">Δεν υπάρχουν επερχόμενες υπενθυμίσεις.</div>';}
-function checkReminders(){const now=Date.now();activities.forEach(a=>{if(!a.reminder||a.notified)return;const t=new Date(a.reminder).getTime();if(t<=now&&now-t<3600000){const c=customers.find(x=>x.id===a.customerId)||{};if('Notification' in window&&Notification.permission==='granted')new Notification('Υπενθύμιση: '+(c.name||'Πελάτης'),{body:(a.type==='visit'?'Επίσκεψη: ':'Τηλεφώνημα: ')+(a.subject||a.next||'')});a.notified=true;}});save();}
+
+const LABELS={
+  kod:'ΚΩΔ.',name:'ΕΠΩΝΥΜΙΑ',branch:'ΚΑΤΑΣΤΗΜΑ/ΥΠΟΚΑΤΑΣΤΗΜΑ',city:'ΠΕΡΙΟΧΗ-ΠΟΛΗ',
+  nomos:'ΝΟΜΟΣ',address:'ΔΙΕΥΘΥΝΣΗ',machine:'ΤΥΠΟΣ ΜΗΧΑΝΗΣ',mixer:'ΤΥΠΟΣ ΑΝΑΔΕΥΤΗΡΑ',
+  sales:'ΠΩΛ.',phone:'ΤΗΛΕΦΩΝΟ',mobile:'ΚΙΝΗΤΟ',tinting:'SERIAL TINTING',sn:'S/N ΑΝΑΔ.'
+};
+
+const SYNONYMS={
+  kod:['κωδ','κωδικο','κωδικοσ','code'],
+  name:['επωνυμια','ονομα','επιχειρηση','name'],
+  branch:['καταστημα','υποκαταστημα','μαγαζι','shop','branch'],
+  city:['περιοχη','πολη','city'],
+  nomos:['νομοσ','νομος','prefecture'],
+  address:['διευθυνση','οδος','address'],
+  machine:['τυποσ μηχανησ','μηχανη','machine'],
+  mixer:['τυποσ αναδευτηρα','αναδευτηρασ','mixer'],
+  sales:['πωλ','πωλητησ','sales'],
+  phone:['τηλεφων','τηλ','τηλεφωνο','phone'],
+  mobile:['κινητο','κινη','mobile'],
+  tinting:['serial tinting','tinting serial'],
+  sn:['s/n αναδ','sn','serial number']
+};
+
+let customers=JSON.parse(localStorage.getItem('customers')||'[]');
+let activities=JSON.parse(localStorage.getItem('activities')||'[]');
+let currentCustomerId=null,editingCustomerId=null,quickCustomerId=null,repairCustomerId=null;
+
+const $=id=>document.getElementById(id);
+
+function save(){
+  localStorage.setItem('customers',JSON.stringify(customers));
+  localStorage.setItem('activities',JSON.stringify(activities));
+}
+
+function toast(m){
+  const t=$('toast');
+  if(!t){alert(m);return;}
+  t.textContent=m;
+  t.classList.remove('hidden');
+  setTimeout(()=>t.classList.add('hidden'),5000);
+}
+
+function norm(s){
+  if(s==null)return'';
+  s=String(s).trim().toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/ς/g,'σ');
+  const map={'α':'a','β':'v','γ':'g','δ':'d','ε':'e','ζ':'z','η':'i','θ':'th','ι':'i','κ':'k','λ':'l','μ':'m','ν':'n','ξ':'x','ο':'o','π':'p','ρ':'r','σ':'s','τ':'t','υ':'y','φ':'f','χ':'ch','ψ':'ps','ω':'o'};
+  return s.split('').map(c=>map[c]||c).join('').replace(/s+/g,' ');
+}
+
+function digits(s){
+  return String(s||'').replace(/D/g,'');
+}
+
+function rowKey(rec){
+  return FIELDS.map(f=>norm(rec[f])).join('|');
+}
+
+function esc(s){
+  return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+function fmtDate(d){
+  return d?new Date(d).toLocaleDateString('el-GR'):'';
+}
+
+function fmtDT(d){
+  return d?new Date(d).toLocaleString('el-GR',{dateStyle:'short',timeStyle:'short'}):'';
+}
+
+function activityLabel(type){
+  return type==='visit'?'ΕΠΙΣΚΕΨΗ':type==='call'?'ΤΗΛΕΦΩΝΗΜΑ':'ΕΠΙΣΚΕΥΗ';
+}
+
+function matchesDate(a){
+  const f=$('dateFilter').value;
+  if(!f)return true;
+  const d=a.date?new Date(a.date):null;
+  if(!d)return false;
+  const now=new Date();
+  now.setHours(0,0,0,0);
+
+  if(f==='today')return d.toDateString()===new Date().toDateString();
+
+  if(f==='week'){
+    const w=new Date(now);
+    w.setDate(now.getDate()-6);
+    return d>=w&&d<=new Date();
+  }
+
+  if(f==='month'){
+    return d.getMonth()===new Date().getMonth()&&d.getFullYear()===new Date().getFullYear();
+  }
+
+  if(f==='custom'){
+    const from=$('dateFrom').value?new Date($('dateFrom').value):null;
+    const to=$('dateTo').value?new Date($('dateTo').value):null;
+    if(from)from.setHours(0,0,0,0);
+    if(to)to.setHours(23,59,59,999);
+    return(!from||d>=from)&&(!to||d<=to);
+  }
+
+  return true;
+}
+
+function customerActivities(id){
+  return activities.filter(a=>a.customerId===id).sort((a,b)=>(b.date||'').localeCompare(a.date||''));
+}
+
+function distanceKm(a,b,c,d){
+  const R=6371,dLat=(c-a)*Math.PI/180,dLon=(d-b)*Math.PI/180;
+  const x=Math.sin(dLat/2)**2+Math.cos(a*Math.PI/180)*Math.cos(c*Math.PI/180)*Math.sin(dLon/2)**2;
+  return 2*R*Math.asin(Math.sqrt(x));
+}
+
+function render(){
+  const q=norm($('search').value),nf=norm($('nomosFilter').value);
+
+  let list=customers.filter(c=>{
+    const hay=norm(
+      FIELDS.map(f=>c[f]).join(' ')+' '+
+      customerActivities(c.id).map(a=>[a.type,a.subject,a.result,a.next,a.place,a.direction,a.machine,a.problem,a.work,a.status].join(' ')).join(' ')
+    );
+    return(!q||hay.includes(q))&&(!nf||norm(c.nomos)===nf);
+  });
+
+  if($('dateFilter').value){
+    list=list.filter(c=>customerActivities(c.id).some(matchesDate));
+  }
+
+  list.sort((a,b)=>(a.name||'').localeCompare(b.name||'','el'));
+
+  $('resultCount').textContent=list.length+' πελάτες';
+
+  $('customerList').innerHTML=list.length?list.map(c=>{
+    const visits=customerActivities(c.id).filter(a=>a.type==='visit').length;
+    const calls=customerActivities(c.id).filter(a=>a.type==='call').length;
+    const repairs=customerActivities(c.id).filter(a=>a.type==='repair').length;
+
+    return `
+      <div class="list-item" onclick="openCustomer('${c.id}')">
+        <div class="name">${esc(c.name||'(χωρίς όνομα)')}</div>
+        <div class="sub">${esc([c.kod,c.branch,c.city,c.nomos].filter(Boolean).join(' • '))}</div>
+        <div class="sub">${esc([c.address,c.phone,c.mobile].filter(Boolean).join(' • '))}</div>
+        <div style="margin-top:6px">
+          <span class="badge">${visits} επισκέψεις</span>
+          <span class="badge gray">${calls} τηλεφωνήματα</span>
+          <span class="badge purple">${repairs} επισκευές</span>
+        </div>
+      </div>
+    `;
+  }).join(''):'<div class="empty">Δεν βρέθηκαν πελάτες.</div>';
+
+  const nomoi=[...new Set(customers.map(c=>c.nomos).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'el'));
+
+  $('nomosFilter').innerHTML='<option value="">Όλοι οι νομοί</option>'+nomoi.map(n=>`<option ${norm(n)===nf?'selected':''}>${esc(n)}</option>`).join('');
+  $('nomosList').innerHTML=nomoi.map(n=>`<option value="${esc(n)}">`).join('');
+}
+
+function showHome(){
+  ['customerView','customerFormView','nearbyView'].forEach(i=>{
+    const e=$(i);
+    if(e)e.classList.add('hidden');
+  });
+  $('homeView').classList.remove('hidden');
+  $('appTitle').textContent='Πελατολόγιο';
+  render();
+}
+
+function showCustomerForm(id=null){
+  editingCustomerId=id;
+  const c=id?customers.find(x=>x.id===id):null;
+
+  $('customerFormTitle').textContent=c?'Επεξεργασία πελάτη':'Νέος πελάτης';
+  FIELDS.forEach(f=>$('f'+f).value=c?(c[f]||''):'');
+
+  ['homeView','customerView','nearbyView'].forEach(i=>$(i).classList.add('hidden'));
+  $('customerFormView').classList.remove('hidden');
+}
+
+function saveCustomerForm(){
+  const name=$('fname').value.trim();
+  if(!name){
+    toast('Συμπλήρωσε Επωνυμία');
+    return;
+  }
+
+  let c=editingCustomerId?customers.find(x=>x.id===editingCustomerId):{id:'c'+Date.now()+Math.random().toString(36).slice(2,7)};
+
+  FIELDS.forEach(f=>c[f]=$('f'+f).value.trim());
+
+  if(!editingCustomerId)customers.push(c);
+
+  save();
+  toast('Αποθηκεύτηκε');
+  showHome();
+}
+
+function mapsUrl(c){
+  const q=[c.address,c.city,c.nomos,c.name].filter(Boolean).join(', ');
+  return 'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(q);
+}
+
+function openCustomer(id,presetType=null){
+  currentCustomerId=id;
+  const c=customers.find(x=>x.id===id);
+  if(!c)return;
+
+  const repairs=customerActivities(c.id).filter(a=>a.type==='repair').length;
+
+  $('customerCard').innerHTML=`
+    <div style="display:flex;justify-content:space-between;gap:8px">
+      <h2>${esc(c.name||'')}</h2>
+      <div>
+        <button class="btn secondary small" onclick="showCustomerForm('${c.id}')">Επεξεργασία</button>
+        <button class="btn red small" onclick="deleteCustomer('${c.id}')">Διαγραφή</button>
+      </div>
+    </div>
+
+    <div>
+      ${c.kod?`<span class="badge">ΚΩΔ. ${esc(c.kod)}</span>`:''}
+      ${c.branch?`<span class="badge gray">${esc(c.branch)}</span>`:''}
+      ${c.nomos?`<span class="badge gray">${esc(c.nomos)}</span>`:''}
+      ${c.city?`<span class="badge gray">${esc(c.city)}</span>`:''}
+      <span class="badge purple">${repairs} επισκευές</span>
+    </div>
+
+    <div style="margin-top:10px;font-size:14px;line-height:1.7">
+      ${[
+        ['ΚΑΤΑΣΤΗΜΑ/ΥΠΟΚΑΤΑΣΤΗΜΑ',c.branch],
+        ['ΔΙΕΥΘΥΝΣΗ',c.address],
+        ['ΤΥΠΟΣ ΜΗΧΑΝΗΣ',c.machine],
+        ['ΤΥΠΟΣ ΑΝΑΔΕΥΤΗΡΑ',c.mixer],
+        ['ΠΩΛ.',c.sales],
+        ['ΤΗΛΕΦΩΝΟ',c.phone],
+        ['ΚΙΝΗΤΟ',c.mobile],
+        ['SERIAL TINTING',c.tinting],
+        ['S/N ΑΝΑΔ.',c.sn]
+      ].filter(x=>x[1]).map(x=>`<div><b>${x[0]}:</b> ${esc(x[1])}</div>`).join('')}
+    </div>
+
+    <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
+      ${c.phone?`<a href="tel:${esc(c.phone)}"><button class="btn secondary small">📞 ${esc(c.phone)}</button></a>`:''}
+      ${c.mobile?`<a href="tel:${esc(c.mobile)}"><button class="btn secondary small">📱 ${esc(c.mobile)}</button></a>`:''}
+      <a href="${mapsUrl(c)}" target="_blank"><button class="btn secondary small">🗺️ Google Maps</button></a>
+      <button class="btn secondary small" onclick="saveLocation('${c.id}')">📍 Αποθήκευση τοποθεσίας</button>
+    </div>
+  `;
+
+  $('actDate').value=new Date().toISOString().slice(0,10);
+  $('actTime').value=new Date().toTimeString().slice(0,5);
+
+  const type=presetType||'visit';
+
+  $('actType').value=type;
+  updateActivityFields();
+
+  if(type==='repair'){
+    $('repairMachine').value=c.machine||'';
+  }
+
+  renderActivities();
+
+  ['homeView','customerFormView','nearbyView'].forEach(i=>$(i).classList.add('hidden'));
+  $('customerView').classList.remove('hidden');
+  $('appTitle').textContent=c.name||'Πελάτης';
+}
+
+function updateActivityFields(){
+  const v=$('actType').value;
+
+  $('visitFields').classList.toggle('hidden',v!=='visit');
+  $('callFields').classList.toggle('hidden',v!=='call');
+  $('repairFields').classList.toggle('hidden',v!=='repair');
+}
+
+function deleteCustomer(id){
+  if(!confirm('Να διαγραφεί ο πελάτης και όλο το ιστορικό του;'))return;
+  customers=customers.filter(c=>c.id!==id);
+  activities=activities.filter(a=>a.customerId!==id);
+  save();
+  showHome();
+}
+
+function dedupeCustomers(){
+  if(!confirm('Να αφαιρεθούν οι ακριβώς ίδιες διπλές εγγραφές; Θα κρατηθεί μία από κάθε ομάδα.'))return;
+
+  const seen=new Set();
+  const keep=[];
+  let removed=0;
+
+  customers.forEach(c=>{
+    const k=rowKey(c);
+    if(seen.has(k)){
+      removed++;
+      const aid=activities.filter(a=>a.customerId===c.id).map(a=>a.id);
+      activities=activities.filter(a=>!aid.includes(a.id));
+    }else{
+      seen.add(k);
+      keep.push(c);
+    }
+  });
+
+  customers=keep;
+  save();
+  showHome();
+  toast('Αφαιρέθηκαν '+removed+' διπλότυπες εγγραφές.');
+}
+
+function deleteAllCustomers(){
+  if(!confirm('ΠΡΟΣΟΧΗ: Θα διαγραφούν ΟΛΟΙ οι πελάτες και όλες οι δραστηριότητες. Συνέχεια;'))return;
+  if(!confirm('Είσαι βέβαιος; Η διαγραφή είναι οριστική. Πρότεινεται πρώτα Εξαγωγή Excel.'))return;
+
+  customers=[];
+  activities=[];
+  save();
+  showHome();
+  toast('Διαγράφηκαν όλα τα δεδομένα.');
+}
+
+function addActivity(){
+  if(!currentCustomerId)return;
+
+  const type=$('actType').value;
+
+  const a={
+    id:'a'+Date.now()+Math.random().toString(36).slice(2,6),
+    customerId:currentCustomerId,
+    type:type,
+    date:$('actDate').value,
+    time:$('actTime').value,
+    subject:$('actSubject').value.trim(),
+    result:$('actResult').value.trim(),
+    next:$('actNext').value.trim(),
+    reminder:$('actReminder').value,
+    place:type==='visit'?$('visitPlace').value.trim():'',
+    direction:type==='call'?$('callDirection').value:'',
+    machine:type==='repair'?$('repairMachine').value.trim():'',
+    problem:type==='repair'?$('repairProblem').value.trim():'',
+    work:type==='repair'?$('repairWork').value.trim():'',
+    cost:type==='repair'?$('repairCost').value.trim():'',
+    status:type==='repair'?$('repairStatus').value:''
+  };
+
+  if(!a.date){
+    toast('Συμπλήρωσε ημερομηνία');
+    return;
+  }
+
+  activities.push(a);
+  save();
+
+  $('actSubject').value='';
+  $('actResult').value='';
+  $('actNext').value='';
+  $('actReminder').value='';
+  $('visitPlace').value='';
+  $('repairMachine').value='';
+  $('repairProblem').value='';
+  $('repairWork').value='';
+  $('repairCost').value='';
+  $('repairStatus').value='Σε αναμονή';
+
+  toast('Η δραστηριότητα αποθηκεύτηκε');
+  renderActivities();
+
+  if('Notification' in window&&Notification.permission==='default'){
+    Notification.requestPermission();
+  }
+}
+
+$('actType').addEventListener('change',updateActivityFields);
+
+function renderActivities(){
+  const acts=customerActivities(currentCustomerId);
+
+  $('activityList').innerHTML=acts.length?acts.map(a=>`
+    <div class="activity ${a.type}">
+      <div>
+        <span class="badge ${a.type==='visit'?'green':a.type==='repair'?'purple':''}">${activityLabel(a.type)}</span>
+        ${a.direction?`<span class="badge gray">${esc(a.direction)}</span>`:''}
+        ${a.status?`<span class="badge gray">${esc(a.status)}</span>`:''}
+        <b>${fmtDate(a.date)}${a.time?' '+esc(a.time):''}</b>
+      </div>
+
+      <div style="margin-top:4px">
+        ${a.subject?`<b>${esc(a.subject)}</b><br>`:''}
+        ${a.place?`📍 ${esc(a.place)}<br>`:''}
+        ${a.machine?`🔧 ${esc(a.machine)}<br>`:''}
+        ${a.problem?`<b>Βλάβη:</b> ${esc(a.problem)}<br>`:''}
+        ${a.work?`<b>Εργασίες:</b> ${esc(a.work)}<br>`:''}
+        ${a.cost?`<b>Κόστος:</b> ${esc(a.cost)}<br>`:''}
+        ${a.result?esc(a.result).replace(/
+/g,'<br>'):''}
+      </div>
+
+      ${a.next?`<div style="margin-top:5px"><b>Επόμενη:</b> ${esc(a.next)}</div>`:''}
+      ${a.reminder?`<div class="sub">⏰ Υπενθύμιση: ${fmtDT(a.reminder)}</div>`:''}
+
+      <button class="btn red small" style="margin-top:8px" onclick="deleteActivity('${a.id}')">Διαγραφή</button>
+    </div>
+  `).join(''):'<div class="empty">Δεν υπάρχουν καταχωρήσεις ακόμη.</div>';
+}
+
+function deleteActivity(id){
+  if(!confirm('Να διαγραφεί η δραστηριότητα;'))return;
+  activities=activities.filter(a=>a.id!==id);
+  save();
+  renderActivities();
+}
+
+function checkReminders(){
+  const now=Date.now();
+
+  activities.forEach(a=>{
+    if(!a.reminder||a.notified)return;
+
+    const t=new Date(a.reminder).getTime();
+
+    if(t<=now&&now-t<3600000){
+      const c=customers.find(x=>x.id===a.customerId)||{};
+
+      if('Notification' in window&&Notification.permission==='granted'){
+        new Notification('Υπενθύμιση: '+(c.name||'Πελάτης'),{
+          body:activityLabel(a.type)+': '+(a.subject||a.next||'')
+        });
+      }
+
+      a.notified=true;
+    }
+  });
+
+  save();
+}
+
 setInterval(checkReminders,60000);
-$('dateFilter').addEventListener('change',()=>{$('customDates').classList.toggle('hidden',$('dateFilter').value!=='custom');render();});
+
+$('dateFilter').addEventListener('change',()=>{
+  $('customDates').classList.toggle('hidden',$('dateFilter').value!=='custom');
+  render();
+});
+
 $('nomosFilter').addEventListener('change',render);
 ['search','dateFrom','dateTo'].forEach(i=>$(i).addEventListener('input',render));
-$('fileInput').addEventListener('change',e=>{const file=e.target.files[0];if(!file)return;if(typeof XLSX==='undefined'){toast('Δεν φορτώθηκε η βιβλιοθήκη Excel. Σύνδεσου στο internet, κλείσε και ξαναάνοιξε την εφαρμογή.');e.target.value='';return;}const reader=new FileReader();reader.onload=ev=>{try{importWorkbook(ev.target.result)}catch(err){toast('Σφάλμα εισαγωγής: '+err.message)}e.target.value=''};reader.onerror=()=>toast('Δεν μπόρεσε να διαβαστεί το αρχείο');reader.readAsArrayBuffer(file);});
-function findHeader(headers,target){const nt=norm(target);let best=null,bs=0;headers.forEach(h=>{const nh=norm(h);if(!nh)return;let sc=0;if(nh===nt)sc=100;else if(nh.replace(/[^a-z0-9]/g,'')===nt.replace(/[^a-z0-9]/g,''))sc=90;else if(nh.includes(nt)||nt.includes(nh))sc=70;else if((SYNONYMS[target]||[]).some(s=>{const ns=norm(s);return nh===ns||nh.includes(ns)||ns.includes(nh)}))sc=80;if(sc>bs){bs=sc;best=h}});return best;}
-function importWorkbook(buffer){const wb=XLSX.read(buffer,{type:'array'});let added=0,skipped=0;const existingKeys=new Set(customers.map(c=>rowKey(c)));
-wb.SheetNames.forEach(sheetName=>{const rows=XLSX.utils.sheet_to_json(wb.Sheets[sheetName],{defval:'',raw:false});if(!rows.length)return;const headers=Object.keys(rows[0]);const map={};FIELDS.forEach(f=>{const h=findHeader(headers,f);if(h)map[f]=h});if(!map.name){const nl=headers.find(h=>/επωνυμι|ονομα|επιχειρηση|name/i.test(h));if(nl)map.name=nl;}
-rows.forEach(r=>{const get=f=>map[f]?String(r[map[f]]??'').trim():'';const name=get('name');if(!name){skipped++;return;}const nomos=get('nomos')||sheetName;const rec={};FIELDS.forEach(f=>rec[f]=get(f));rec.nomos=nomos;const key=rowKey(rec);if(existingKeys.has(key)){skipped++;return;}existingKeys.add(key);const c={id:'c'+Date.now()+Math.random().toString(36).slice(2,9)+added};Object.assign(c,rec);customers.push(c);added++;});});
-save();showHome();toast(`Εισήχθησαν ${added} νέες εγγραφές. Παραλείφθηκαν ${skipped} διπλότυπες/κενές γραμμές.`);}
-function exportExcel(){if(typeof XLSX==='undefined'){toast('Δεν φορτώθηκε η βιβλιοθήκη Excel. Χρειάζεται internet.');return;}if(!customers.length){toast('Δεν υπάρχουν δεδομένα');return;}const cs=customers.map(c=>{const o={};FIELDS.forEach(f=>o[LABELS[f]]=c[f]||'');if(c.lat)o['LAT']=c.lat;if(c.lng)o['LNG']=c.lng;return o});const acts=activities.map(a=>{const c=customers.find(x=>x.id===a.customerId)||{};return {'ΚΩΔ.':c.kod||'','ΕΠΩΝΥΜΙΑ':c.name||'','ΚΑΤΑΣΤΗΜΑ':c.branch||'','ΤΥΠΟΣ':a.type==='visit'?'Επίσκεψη':'Τηλεφώνημα','ΗΜΕΡΟΜΗΝΙΑ':a.date||'','ΩΡΑ':a.time||'','ΤΟΠΟΘΕΣΙΑ':a.place||'','ΚΛΗΣΗ':a.direction||'','ΘΕΜΑ':a.subject||'','ΑΠΟΤΕΛΕΣΜΑ':a.result||'','ΕΠΟΜΕΝΗ ΕΝΕΡΓΕΙΑ':a.next||'','ΥΠΕΝΘΥΜΙΣΗ':a.reminder||''}});const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(cs),'Πελάτες');if(acts.length)XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(acts),'Δραστηριότητες');XLSX.writeFile(wb,'Πελατολόγιο-'+new Date().toISOString().slice(0,10)+'.xlsx');}
-function quickCall(){$('modal').classList.remove('hidden');$('quickPhone').value='';$('quickMatch').textContent='';$('quickPhone').focus();}
-function closeModal(){$('modal').classList.add('hidden');}
-$('quickPhone').addEventListener('input',()=>{const d=digits($('quickPhone').value);if(d.length<4){$('quickMatch').textContent='';quickCustomerId=null;return;}const c=customers.find(x=>digits(x.phone).endsWith(d)||digits(x.mobile).endsWith(d));quickCustomerId=c?c.id:null;$('quickMatch').textContent=c?('Βρέθηκε: '+c.name+(c.branch?' – '+c.branch:'')):'Δεν βρέθηκε πελάτη με αυτό το νούμερο.';});
-function quickCallSave(){const d=digits($('quickPhone').value);if(!d){toast('Βάλε τηλέφωνο');return;}let c=quickCustomerId?customers.find(x=>x.id===quickCustomerId):null;if(!c){toast('Δεν βρέθηκε πελάτης.');return;}closeModal();openCustomer(c.id,true);}
-function saveLocation(id){if(!window.isSecureContext||!navigator.geolocation){toast('Η τοποθεσία δεν λειτουργεί σε τοπικό αρχείο. Απαιτείται έκδοση μέσω https.');return;}const c=customers.find(x=>x.id===id);toast('Παίρνω την τοποθεσία...');navigator.geolocation.getCurrentPosition(p=>{c.lat=p.coords.latitude;c.lng=p.coords.longitude;save();toast('Αποθηκεύτηκε η τοποθεσία');openCustomer(id);},err=>toast('Δεν δόθηκε άδεια τοποθεσίας.'),{enableHighAccuracy:true,timeout:10000});}
-function showNearby(){['homeView','customerView','customerFormView'].forEach(i=>$(i).classList.add('hidden'));$('nearbyView').classList.remove('hidden');$('appTitle').textContent='Κοντά μου';const wc=customers.filter(c=>c.lat&&c.lng);if(!wc.length){$('nearbyInfo').textContent='Δεν έχει αποθηκευτεί τοποθεσία σε πελάτη.';$('nearbyList').innerHTML='';return;}
-if(!window.isSecureContext||!navigator.geolocation){$('nearbyInfo').textContent='Η τοποθεσία δεν λειτουργεί σε τοπικό αρχείο. Απαιτείται έκδοση μέσω https.';$('nearbyList').innerHTML='';return;}
-navigator.geolocation.getCurrentPosition(p=>{const me=p.coords;const list=wc.map(c=>({...c,km:distanceKm(me.latitude,me.longitude,+c.lat,+c.lng)})).sort((a,b)=>a.km-b.km);$('nearbyInfo').textContent=list.length+' πελάτες με αποθηκευμένη τοποθεσία.';$('nearbyList').innerHTML=list.map(c=>`<div class="list-item" onclick="openCustomer('${c.id}')"><div class="name">${esc(c.name)}${c.branch?' – '+esc(c.branch):''}</div><div class="sub">${esc([c.address,c.city].filter(Boolean).join(', '))}</div><div class="sub"><b>${c.km.toFixed(1)} km</b></div><div style="margin-top:6px"><a href="https://www.google.com/maps/dir/?api=1&destination=${c.lat},${c.lng}" target="_blank"><button class="btn secondary small">Οδηγίες</button></a></div></div>`).join('');},()=>{$('nearbyInfo').textContent='Δεν δόθηκε άδεια τοποθεσίας.';},{enableHighAccuracy:true,timeout:12000});}
+
+$('fileInput').addEventListener('change',e=>{
+  const file=e.target.files[0];
+  if(!file)return;
+
+  if(typeof XLSX==='undefined'){
+    toast('Δεν φορτώθηκε η βιβλιοθήκη Excel. Σύνδεσου στο internet, κλείσε και ξαναάνοιξε την εφαρμογή.');
+    e.target.value='';
+    return;
+  }
+
+  const reader=new FileReader();
+
+  reader.onload=ev=>{
+    try{
+      importWorkbook(ev.target.result);
+    }catch(err){
+      toast('Σφάλμα εισαγωγής: '+err.message);
+    }
+    e.target.value='';
+  };
+
+  reader.onerror=()=>toast('Δεν μπόρεσε να διαβαστεί το αρχείο');
+  reader.readAsArrayBuffer(file);
+});
+
+function findHeader(headers,target){
+  const nt=norm(target);
+  let best=null,bs=0;
+
+  headers.forEach(h=>{
+    const nh=norm(h);
+    if(!nh)return;
+
+    let sc=0;
+
+    if(nh===nt)sc=100;
+    else if(nh.replace(/[^a-z0-9]/g,'')===nt.replace(/[^a-z0-9]/g,''))sc=90;
+    else if(nh.includes(nt)||nt.includes(nh))sc=70;
+    else if((SYNONYMS[target]||[]).some(s=>{
+      const ns=norm(s);
+      return nh===ns||nh.includes(ns)||ns.includes(nh);
+    }))sc=80;
+
+    if(sc>bs){
+      bs=sc;
+      best=h;
+    }
+  });
+
+  return best;
+}
+
+function importWorkbook(buffer){
+  const wb=XLSX.read(buffer,{type:'array'});
+  let added=0,skipped=0;
+  const existingKeys=new Set(customers.map(c=>rowKey(c)));
+
+  wb.SheetNames.forEach(sheetName=>{
+    const aoa=XLSX.utils.sheet_to_json(wb.Sheets[sheetName],{header:1,defval:'',raw:false});
+    if(!aoa.length)return;
+
+    let headerIndex=-1,headers=[],map={};
+
+    for(let i=0;i<Math.min(aoa.length,20);i++){
+      const hs=(aoa[i]||[]).map(v=>String(v??'').trim());
+      const m={};
+
+      FIELDS.forEach(f=>{
+        const h=findHeader(hs,f);
+        if(h)m[f]=h;
+      });
+
+      if(m.name){
+        headerIndex=i;
+        headers=hs;
+        map=m;
+        break;
+      }
+    }
+
+    if(headerIndex<0){
+      skipped+=aoa.length;
+      return;
+    }
+
+    const rows=aoa.slice(headerIndex+1).filter(r=>r&&r.some(v=>String(v??'').trim()!==''));
+    const colIndex={};
+
+    FIELDS.forEach(f=>{
+      colIndex[f]=map[f]?headers.indexOf(map[f]):-1;
+    });
+
+    rows.forEach(r=>{
+      const get=f=>{
+        const i=colIndex[f];
+        return i>=0?String(r[i]??'').trim():'';
+      };
+
+      const name=get('name');
+      if(!name){
+        skipped++;
+        return;
+      }
+
+      const rec={};
+      FIELDS.forEach(f=>rec[f]=get(f));
+      rec.nomos=rec.nomos||sheetName;
+
+      const key=rowKey(rec);
+      if(existingKeys.has(key)){
+        skipped++;
+        return;
+      }
+
+      existingKeys.add(key);
+
+      const c={id:'c'+Date.now()+Math.random().toString(36).slice(2,9)+added};
+      Object.assign(c,rec);
+      customers.push(c);
+      added++;
+    });
+  });
+
+  save();
+  showHome();
+
+  if(added>0){
+    toast(`Εισήχθησαν ${added} νέες εγγραφές. Παραλείφθηκαν ${skipped} διπλότυπες/κενές γραμμές.`);
+  }else{
+    toast('Δεν βρέθηκαν έγκυρες εγγραφές. Έλεγξε ότι το Excel έχει στήλη «ΕΠΩΝΥΜΙΑ» ή «ΟΝΟΜΑ».');
+  }
+}
+
+function exportExcel(){
+  if(typeof XLSX==='undefined'){
+    toast('Δεν φορτώθηκε η βιβλιοθήκη Excel. Χρειάζεται internet.');
+    return;
+  }
+
+  if(!customers.length){
+    toast('Δεν υπάρχουν δεδομένα');
+    return;
+  }
+
+  const cs=customers.map(c=>{
+    const o={};
+    FIELDS.forEach(f=>o[LABELS[f]]=c[f]||'');
+    if(c.lat)o['LAT']=c.lat;
+    if(c.lng)o['LNG']=c.lng;
+    return o;
+  });
+
+  const acts=activities.map(a=>{
+    const c=customers.find(x=>x.id===a.customerId)||{};
+    return {
+      'ΚΩΔ.':c.kod||'',
+      'ΕΠΩΝΥΜΙΑ':c.name||'',
+      'ΚΑΤΑΣΤΗΜΑ':c.branch||'',
+      'ΤΥΠΟΣ':activityLabel(a.type),
+      'ΗΜΕΡΟΜΗΝΙΑ':a.date||'',
+      'ΩΡΑ':a.time||'',
+      'ΤΟΠΟΘΕΣΙΑ':a.place||'',
+      'ΚΛΗΣΗ':a.direction||'',
+      'ΣΥΣΚΕΥΗ':a.machine||'',
+      'ΒΛΑΒΗ':a.problem||'',
+      'ΕΡΓΑΣΙΕΣ':a.work||'',
+      'ΚΟΣΤΟΣ':a.cost||'',
+      'ΚΑΤΑΣΤΑΣΗ':a.status||'',
+      'ΘΕΜΑ':a.subject||'',
+      'ΑΠΟΤΕΛΕΣΜΑ':a.result||'',
+      'ΕΠΟΜΕΝΗ ΕΝΕΡΓΕΙΑ':a.next||'',
+      'ΥΠΕΝΘΥΜΙΣΗ':a.reminder||''
+    };
+  });
+
+  const wb=XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(cs),'Πελάτες');
+
+  if(acts.length){
+    XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(acts),'Δραστηριότητες');
+  }
+
+  XLSX.writeFile(wb,'Πελατολόγιο-'+new Date().toISOString().slice(0,10)+'.xlsx');
+}
+
+function quickCall(){
+  $('modal').classList.remove('hidden');
+  $('quickPhone').value='';
+  $('quickMatch').textContent='';
+  $('quickPhone').focus();
+}
+
+function closeModal(){
+  $('modal').classList.add('hidden');
+}
+
+function quickRepair(){
+  $('repairModal').classList.remove('hidden');
+  $('repairPhone').value='';
+  $('repairMatch').textContent='';
+  $('repairPhone').focus();
+}
+
+function closeRepairModal(){
+  $('repairModal').classList.add('hidden');
+}
+
+$('quickPhone').addEventListener('input',()=>{
+  const d=digits($('quickPhone').value);
+
+  if(d.length<4){
+    $('quickMatch').textContent='';
+    quickCustomerId=null;
+    return;
+  }
+
+  const c=customers.find(x=>digits(x.phone).endsWith(d)||digits(x.mobile).endsWith(d));
+
+  quickCustomerId=c?c.id:null;
+
+  $('quickMatch').textContent=c?
+    ('Βρέθηκε: '+c.name+(c.branch?' – '+c.branch:'')):
+    'Δεν βρέθηκε πελάτης με αυτό το νούμερο.';
+});
+
+$('repairPhone').addEventListener('input',()=>{
+  const d=digits($('repairPhone').value);
+
+  if(d.length<4){
+    $('repairMatch').textContent='';
+    repairCustomerId=null;
+    return;
+  }
+
+  const c=customers.find(x=>digits(x.phone).endsWith(d)||digits(x.mobile).endsWith(d));
+
+  repairCustomerId=c?c.id:null;
+
+  $('repairMatch').textContent=c?
+    ('Βρέθηκε: '+c.name+(c.branch?' – '+c.branch:'')):
+    'Δεν βρέθηκε πελάτης με αυτό το νούμερο.';
+});
+
+function quickCallSave(){
+  const d=digits($('quickPhone').value);
+
+  if(!d){
+    toast('Βάλε τηλέφωνο');
+    return;
+  }
+
+  let c=quickCustomerId?customers.find(x=>x.id===quickCustomerId):null;
+
+  if(!c){
+    toast('Δεν βρέθηκε πελάτης.');
+    return;
+  }
+
+  closeModal();
+  openCustomer(c.id,'call');
+}
+
+function quickRepairSave(){
+  const d=digits($('repairPhone').value);
+
+  if(!d){
+    toast('Βάλε τηλέφωνο');
+    return;
+  }
+
+  let c=repairCustomerId?customers.find(x=>x.id===repairCustomerId):null;
+
+  if(!c){
+    toast('Δεν βρέθηκε πελάτης.');
+    return;
+  }
+
+  closeRepairModal();
+  openCustomer(c.id,'repair');
+}
+
+function saveLocation(id){
+  if(!window.isSecureContext||!navigator.geolocation){
+    toast('Η τοποθεσία δεν λειτουργεί σε τοπικό αρχείο. Απαιτείται έκδοση μέσω https.');
+    return;
+  }
+
+  const c=customers.find(x=>x.id===id);
+
+  toast('Παίρνω την τοποθεσία...');
+
+  navigator.geolocation.getCurrentPosition(
+    p=>{
+      c.lat=p.coords.latitude;
+      c.lng=p.coords.longitude;
+      save();
+      toast('Αποθηκεύτηκε η τοποθεσία');
+      openCustomer(id);
+    },
+    err=>toast('Δεν δόθηκε άδεια τοποθεσίας.'),
+    {enableHighAccuracy:true,timeout:10000}
+  );
+}
+
+function showNearby(){
+  ['homeView','customerView','customerFormView'].forEach(i=>$(i).classList.add('hidden'));
+  $('nearbyView').classList.remove('hidden');
+  $('appTitle').textContent='Κοντά μου';
+
+  const wc=customers.filter(c=>c.lat&&c.lng);
+
+  if(!wc.length){
+    $('nearbyInfo').textContent='Δεν έχει αποθηκευτεί τοποθεσία σε πελάτη.';
+    $('nearbyList').innerHTML='';
+    return;
+  }
+
+  if(!window.isSecureContext||!navigator.geolocation){
+    $('nearbyInfo').textContent='Η τοποθεσία δεν λειτουργεί σε τοπικό αρχείο. Απαιτείται έκδοση μέσω https.';
+    $('nearbyList').innerHTML='';
+    return;
+  }
+
+  navigator.geolocation.getCurrentPosition(
+    p=>{
+      const me=p.coords;
+
+      const list=wc.map(c=>({
+        ...c,
+        km:distanceKm(me.latitude,me.longitude,+c.lat,+c.lng)
+      })).sort((a,b)=>a.km-b.km);
+
+      $('nearbyInfo').textContent=list.length+' πελάτες με αποθηκευμένη τοποθεσία.';
+
+      $('nearbyList').innerHTML=list.map(c=>`
+        <div class="list-item" onclick="openCustomer('${c.id}')">
+          <div class="name">${esc(c.name)}${c.branch?' – '+esc(c.branch):''}</div>
+          <div class="sub">${esc([c.address,c.city].filter(Boolean).join(', '))}</div>
+          <div class="sub"><b>${c.km.toFixed(1)} km</b></div>
+          <div style="margin-top:6px">
+            <a href="https://www.google.com/maps/dir/?api=1&destination=${c.lat},${c.lng}" target="_blank">
+              <button class="btn secondary small">Οδηγίες</button>
+            </a>
+          </div>
+        </div>
+      `).join('');
+    },
+    ()=>{
+      $('nearbyInfo').textContent='Δεν δόθηκε άδεια τοποθεσίας.';
+    },
+    {enableHighAccuracy:true,timeout:12000}
+  );
+}
+
 const missing=REQUIRED.filter(id=>!document.getElementById(id));
-if(missing.length){alert('Το αρχείο δεν φορτώθηκε πλήρως. Λείπουν: '+missing.join(', '));}
-else{showHome();checkReminders();}
-if ('serviceWorker' in navigator) {
+
+if(missing.length){
+  alert('Το αρχείο δεν φορτώθηκε πλήρως. Λείπουν: '+missing.join(', '));
+}else{
+  showHome();
+  checkReminders();
+}
+
+if('serviceWorker' in navigator){
   navigator.serviceWorker.register('sw.js');
 }
-</script></body></html>
+</script>
+
+</body>
+</html>
