@@ -294,7 +294,7 @@ function toast(m){
   if(!t){alert(m);return;}
   t.textContent=m;
   t.classList.remove('hidden');
-  setTimeout(()=>t.classList.add('hidden'),5000);
+  setTimeout(()=>t.classList.add('hidden'),6000);
 }
 
 function norm(s){
@@ -702,6 +702,8 @@ $('nomosFilter').addEventListener('change',render);
 $('fileInput').addEventListener('change',e=>{
   const file=e.target.files[0];
   if(!file)return;
+
+  alert('Διάλεξες το αρχείο: '+file.name);
 
   if(typeof XLSX==='undefined'){
     toast('Δεν φορτώθηκε η βιβλιοθήκη Excel. Σύνδεσου στο internet, κλείσε και ξαναάνοιξε την εφαρμογή.');
